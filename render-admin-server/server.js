@@ -195,6 +195,8 @@ app.get("/", (_req, res) => {
         <div style="flex:1"><small>Version Code</small><input id="latest_version_code" type="number" /></div>
         <div style="flex:1"><small>Version Name</small><input id="latest_version_name" /></div>
       </div>
+      <small>Maintenance Title</small><input id="maintenance_title" />
+      <small>Maintenance Message</small><input id="maintenance_message" />
       <small>Update Title</small><input id="update_title" />
       <small>Changelog / Message</small><textarea id="update_message" rows="3"></textarea>
       <small>GitHub APK / Release URL</small><input id="download_url" />
@@ -206,6 +208,9 @@ app.get("/", (_req, res) => {
       <div class="row">
         <input id="klabel" placeholder="User label (e.g. Pranav VIP)" style="flex:2;margin:0" />
         <input id="kdays" type="number" value="30" placeholder="Days" style="flex:1;margin:0" />
+      </div>
+      <div class="row" style="margin-top:8px">
+        <input id="kcustom" placeholder="Custom Key (optional, blank = auto)" style="flex:2;margin:0" />
         <button onclick="issueKey()">Create Key</button>
       </div>
       <div id="keys"></div>
@@ -222,13 +227,15 @@ async function loadDash() {
   document.getElementById("panel").style.display = "grid";
   const c = d.config;
   ["app_enabled","maintenance_mode","require_license","force_update"].forEach(k => document.getElementById(k).checked = !!c[k]);
-  ["latest_version_code","latest_version_name","update_title","update_message","download_url","support_url"].forEach(k => document.getElementById(k).value = c[k] ?? "");
+  ["maintenance_title","maintenance_message","latest_version_code","latest_version_name","update_title","update_message","download_url","support_url"].forEach(k => document.getElementById(k).value = c[k] ?? "");
   renderKeys(d.keys || []);
 }
 async function saveConfig() {
   const body = {
     app_enabled: document.getElementById("app_enabled").checked,
     maintenance_mode: document.getElementById("maintenance_mode").checked,
+    maintenance_title: document.getElementById("maintenance_title").value,
+    maintenance_message: document.getElementById("maintenance_message").value,
     require_license: document.getElementById("require_license").checked,
     force_update: document.getElementById("force_update").checked,
     latest_version_code: Number(document.getElementById("latest_version_code").value || 1),
@@ -242,7 +249,8 @@ async function saveConfig() {
   loadDash();
 }
 async function issueKey() {
-  await fetch("/api/admin/keys", { method:"POST", headers: h(), body: JSON.stringify({ label: document.getElementById("klabel").value, days_valid: Number(document.getElementById("kdays").value || 30) }) });
+  await fetch("/api/admin/keys", { method:"POST", headers: h(), body: JSON.stringify({ label: document.getElementById("klabel").value, days_valid: Number(document.getElementById("kdays").value || 30), custom_key: document.getElementById("kcustom").value }) });
+  document.getElementById("kcustom").value = "";
   loadDash();
 }
 async function keyAct(url, method="POST") { await fetch(url, { method, headers: h() }); loadDash(); }

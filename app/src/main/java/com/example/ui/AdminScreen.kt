@@ -241,6 +241,28 @@ fun AdminScreen(
                     Spacer(modifier = Modifier.height(10.dp))
 
                     OutlinedTextField(
+                        value = cfg.maintenanceTitle,
+                        onValueChange = { mt ->
+                            viewModel.updateEditableConfig { it.copy(maintenanceTitle = mt) }
+                        },
+                        label = { Text("Maintenance / Kill-Switch Title") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    OutlinedTextField(
+                        value = cfg.maintenanceMessage,
+                        onValueChange = { mm ->
+                            viewModel.updateEditableConfig { it.copy(maintenanceMessage = mm) }
+                        },
+                        label = { Text("Maintenance / Kill-Switch Message") },
+                        minLines = 2,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    OutlinedTextField(
                         value = cfg.updateTitle,
                         onValueChange = { t ->
                             viewModel.updateEditableConfig { it.copy(updateTitle = t) }
