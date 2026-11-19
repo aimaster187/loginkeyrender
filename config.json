@@ -8,8 +8,8 @@
   "force_update": false,
   "update_title": "Update",
   "update_message": "",
-  "download_url": "https://github.com",
+  "download_url": "",
   "support_url": "https://t.me/pranavsmm",
-  "require_license": false,
-  "updated_at": "2026-11-19T05:30:48.291Z"
+  "require_license": true,
+  "updated_at": "2026-11-19T05:31:36.665Z"
 }
