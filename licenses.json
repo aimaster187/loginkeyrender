@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "key": "PRANAV-C35D-23C0-4510",
+    "label": "PRNV-3323-433C-8C4D-DF9D",
+    "bound_device_id": null,
+    "bound_device_model": null,
+    "expires_at": "2026-12-19T05:32:22.859Z",
+    "revoked": false,
+    "created_at": "2026-11-19T05:32:22.859Z",
+    "last_check_at": null
+  }
+]
