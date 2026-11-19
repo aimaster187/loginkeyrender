@@ -1,0 +1,14 @@
+{
+  "app_enabled": true,
+  "maintenance_mode": false,
+  "maintenance_title": "Service Paused",
+  "maintenance_message": "Access is temporarily paused by PRANAV Admin.",
+  "latest_version_code": 1,
+  "latest_version_name": "1.0",
+  "force_update": false,
+  "update_title": "New Update Available",
+  "update_message": "Download the latest release from GitHub.",
+  "download_url": "https://github.com/your-user/your-repo/releases/latest",
+  "support_url": "https://t.me/your_admin",
+  "require_license": true
+}

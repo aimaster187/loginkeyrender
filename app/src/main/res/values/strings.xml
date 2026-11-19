@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">PRANAV</string>
+    <string name="nav_gate">Gate</string>
+    <string name="nav_admin">Admin</string>
+    <string name="nav_deploy">Deploy</string>
+    <string name="brand_subtitle">One-Device License &amp; Force Update Engine</string>
+    <string name="device_fingerprint_label">Device Hardware ID</string>
+    <string name="copy_success">Copied to clipboard</string>
+    <string name="render_url_label">Render Admin Server URL</string>
+    <string name="github_raw_label">GitHub Raw Config URL (Fallback)</string>
+    <string name="admin_secret_label">Admin Secret Token</string>
+    <string name="license_key_label">License Key</string>
+    <string name="verify_gate_cta">Run PranavGate.check(activity)</string>
+    <string name="save_endpoint_cta">Save &amp; Sync</string>
+    <string name="preview_force_update_cta">Preview Force Update Dialog</string>
+    <string name="preview_license_gate_cta">Preview License Dialog</string>
+    <string name="preview_maintenance_cta">Preview Kill Switch</string>
+    <string name="create_key_cta">Issue License Key</string>
+    <string name="save_remote_config_cta">Push Config to Render</string>
+</resources>

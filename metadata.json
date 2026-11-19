@@ -1,0 +1,6 @@
+{
+  "name": "PRANAV",
+  "description": "One-device license key gate, force update controller, and Render/GitHub admin console.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

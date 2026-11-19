@@ -1,0 +1,13 @@
+{
+  "name": "pranav-admin-server",
+  "version": "1.0.0",
+  "description": "PRANAV One-Device License Key & Force Update Admin Server for Render + GitHub",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}
