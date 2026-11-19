@@ -1,4 +1,4 @@
-name: PRANAV Build & Render Check
+name: PRANAV Build & Standalone DEX
 
 on:
   push:
@@ -6,10 +6,19 @@ on:
   pull_request:
     branches: [ main, master ]
   workflow_dispatch:
+    inputs:
+      render_url:
+        description: 'Live Render Admin URL to bake into pranav_gate.dex (optional)'
+        required: false
+        default: ''
+      github_fallback_url:
+        description: 'GitHub Raw config.json fallback URL (optional)'
+        required: false
+        default: ''
 
 jobs:
   android-build:
-    name: Build PRANAV APK & Tests
+    name: Build PRANAV APK & Standalone DEX
     runs-on: ubuntu-latest
 
     steps:
@@ -21,6 +30,31 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+
+      - name: Inject Live Render URL into PranavGate (if provided)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.render_url != '' }}
+        env:
+          RENDER_URL: ${{ inputs.render_url }}
+          GITHUB_FALLBACK: ${{ inputs.github_fallback_url }}
+        run: |
+          python3 - << 'EOF'
+          import os, pathlib
+          p = pathlib.Path("app/src/main/java/com/pranav/guard/PranavGate.java")
+          src = p.read_text()
+          r_url = os.environ.get("RENDER_URL", "").strip().rstrip("/")
+          g_url = os.environ.get("GITHUB_FALLBACK", "").strip()
+          src = src.replace(
+              'public static volatile String DEFAULT_RENDER_URL = "";',
+              f'public static volatile String DEFAULT_RENDER_URL = "{r_url}";'
+          )
+          if g_url:
+              src = src.replace(
+                  'public static volatile String DEFAULT_GITHUB_FALLBACK_URL = "";',
+                  f'public static volatile String DEFAULT_GITHUB_FALLBACK_URL = "{g_url}";'
+              )
+          p.write_text(src)
+          print("Baked DEFAULT_RENDER_URL =", r_url)
+          EOF
 
       - name: Accept Android SDK Licenses
         run: |
@@ -52,11 +86,18 @@ jobs:
       - name: Build Debug APK
         run: gradle :app:assembleDebug --no-daemon
 
-      - name: Extract classes.dex for inspection
+      - name: Build Standalone Single-Class pranav_gate.dex
         run: |
-          mkdir -p build-dex
-          unzip -o -j app/build/outputs/apk/debug/app-debug.apk "classes*.dex" -d build-dex/
-          ls -lh build-dex/
+          SDK_ROOT="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          ANDROID_JAR="$(find "$SDK_ROOT/platforms" -name android.jar | sort -V | tail -n 1)"
+          D8_BIN="$(find "$SDK_ROOT/build-tools" -name d8 -type f | sort -V | tail -n 1)"
+          echo "Using ANDROID_JAR=$ANDROID_JAR"
+          echo "Using D8_BIN=$D8_BIN"
+          mkdir -p build-dex/classes build-dex/out
+          javac --release 11 -cp "$ANDROID_JAR" -d build-dex/classes app/src/main/java/com/pranav/guard/PranavGate.java
+          "$D8_BIN" --min-api 24 --lib "$ANDROID_JAR" --output build-dex/out $(find build-dex/classes -name "*.class")
+          mv build-dex/out/classes.dex build-dex/pranav_gate.dex
+          ls -lh build-dex/pranav_gate.dex
 
       - name: Upload PRANAV Debug APK
         uses: actions/upload-artifact@v4
@@ -65,11 +106,11 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
 
-      - name: Upload Extracted DEX Files
+      - name: Upload Standalone pranav_gate.dex
         uses: actions/upload-artifact@v4
         with:
-          name: PRANAV-classes-dex
-          path: build-dex/classes*.dex
+          name: pranav-gate-standalone-dex
+          path: build-dex/pranav_gate.dex
           if-no-files-found: error
 
   render-server-check:

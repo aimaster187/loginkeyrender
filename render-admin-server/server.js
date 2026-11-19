@@ -154,23 +154,49 @@ app.get("/", (_req, res) => {
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>PRANAV Admin Console</title>
+<title>PRANAV 3D Admin Console</title>
 <style>
-  body { background:#070B14; color:#F1F5F9; font-family:system-ui,sans-serif; margin:0; padding:24px; }
-  .wrap { max-width:760px; margin:0 auto; display:grid; gap:16px; }
-  .card { background:#0F1624; border:1px solid #283548; border-radius:16px; padding:18px; }
-  h1 { margin:0 0 6px; color:#00E5FF; font-size:22px; }
-  h2 { margin:0 0 12px; font-size:17px; }
-  input, textarea { width:100%; box-sizing:border-box; background:#070B14; color:#F1F5F9; border:1px solid #283548; border-radius:10px; padding:10px 12px; margin:6px 0 12px; }
-  button { background:#00E5FF; color:#04131A; font-weight:700; border:none; border-radius:10px; padding:10px 14px; cursor:pointer; }
-  button.sec { background:#1E293B; color:#CBD5E1; }
-  button.warn { background:#FFB300; color:#1A1100; }
-  button.err { background:#FF4D6D; color:#fff; }
+  * { box-sizing:border-box; }
+  body { background:radial-gradient(circle at top,#10203F 0%,#070B14 60%); color:#F1F5F9; font-family:system-ui,sans-serif; margin:0; padding:24px; perspective:1200px; min-height:100vh; }
+  .wrap { max-width:780px; margin:0 auto; display:grid; gap:18px; }
+  .card {
+    position:relative;
+    background:linear-gradient(145deg,#18243E 0%,#0E1628 55%,#090E1B 100%);
+    border:1px solid rgba(0,229,255,0.28);
+    border-top:2px solid rgba(0,229,255,0.65);
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 8px 0 #04070E, 0 22px 40px rgba(0,0,0,0.65), inset 0 1px 0 rgba(255,255,255,0.12);
+    transform:translateZ(0);
+    transition:transform .22s ease, box-shadow .22s ease;
+  }
+  .card:hover { transform:translateY(-2px) rotateX(1deg); box-shadow:0 10px 0 #04070E, 0 28px 50px rgba(0,229,255,0.12), inset 0 1px 0 rgba(255,255,255,0.16); }
+  h1 { margin:0 0 6px; color:#00E5FF; font-size:23px; text-shadow:0 3px 10px rgba(0,229,255,0.35); letter-spacing:0.5px; }
+  h2 { margin:0 0 12px; font-size:17px; color:#F8FAFC; }
+  input, textarea {
+    width:100%; background:#050912; color:#F1F5F9;
+    border:1px solid #283548; border-radius:11px; padding:11px 13px; margin:6px 0 12px;
+    box-shadow:inset 0 3px 6px rgba(0,0,0,0.75);
+  }
+  input:focus, textarea:focus { outline:none; border-color:#00E5FF; box-shadow:inset 0 3px 6px rgba(0,0,0,0.75), 0 0 0 2px rgba(0,229,255,0.25); }
+  button {
+    background:linear-gradient(180deg,#1FF0FF 0%,#00C7DF 100%);
+    color:#04131A; font-weight:800; border:none; border-radius:11px; padding:11px 16px; cursor:pointer;
+    box-shadow:0 5px 0 #007E91, 0 10px 18px rgba(0,229,255,0.2);
+    transition:transform .08s ease, box-shadow .08s ease;
+  }
+  button:active { transform:translateY(4px); box-shadow:0 1px 0 #007E91; }
+  button.sec { background:linear-gradient(180deg,#2B3B57 0%,#1E293B 100%); color:#E2E8F0; box-shadow:0 5px 0 #0F172A; }
+  button.sec:active { box-shadow:0 1px 0 #0F172A; }
+  button.warn { background:linear-gradient(180deg,#FFC42E 0%,#E59A00 100%); color:#1A1100; box-shadow:0 5px 0 #8C5A00; }
+  button.warn:active { box-shadow:0 1px 0 #8C5A00; }
+  button.err { background:linear-gradient(180deg,#FF6380 0%,#E03154 100%); color:#fff; box-shadow:0 5px 0 #88152C; }
+  button.err:active { box-shadow:0 1px 0 #88152C; }
   .row { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
-  .key-item { background:#070B14; border:1px solid #283548; border-radius:12px; padding:12px; margin-top:10px; }
+  .key-item { background:#060B15; border:1px solid #283548; border-radius:13px; padding:13px; margin-top:12px; box-shadow:0 4px 0 #03050A; }
   .mono { font-family:monospace; color:#00E5FF; }
   label { display:flex; align-items:center; gap:8px; margin:6px 0; cursor:pointer; }
-  label input[type=checkbox] { width:auto; margin:0; }
+  label input[type=checkbox] { width:auto; margin:0; box-shadow:none; }
 </style>
 </head>
 <body>
