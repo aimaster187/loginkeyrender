@@ -2,11 +2,11 @@
   {
     "key": "PRANAV-C31E-16AA-0E34",
     "label": "PRNV-D0BB-7D9E-E9D6-0DA9",
-    "bound_device_id": null,
-    "bound_device_model": null,
+    "bound_device_id": "PRNV-D0BB-7D9E-E9D6-0DA9",
+    "bound_device_model": "Xiaomi 24108PCE2I",
     "expires_at": "2300-09-03T04:30:17.449Z",
     "revoked": false,
     "created_at": "2026-11-19T04:30:17.449Z",
-    "last_check_at": null
+    "last_check_at": "2026-11-19T04:31:45.080Z"
   }
 ]
