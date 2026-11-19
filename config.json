@@ -2,14 +2,14 @@
   "app_enabled": true,
   "maintenance_mode": false,
   "maintenance_title": "App ",
-  "maintenance_message": "Access is temporarily paused by PRANAV Admin.",
+  "maintenance_message": "NEW UPDATE LONCH",
   "latest_version_code": 2,
   "latest_version_name": "1.0",
-  "force_update": false,
-  "update_title": "New Update Available",
-  "update_message": "A new version is ready on GitHub Releases.",
+  "force_update": true,
+  "update_title": "Update",
+  "update_message": "",
   "download_url": "https://github.com",
   "support_url": "https://t.me/pranavsmm",
   "require_license": false,
-  "updated_at": "2026-11-19T05:05:04.360Z"
+  "updated_at": "2026-11-19T05:06:00.786Z"
 }
